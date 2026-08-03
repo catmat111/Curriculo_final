@@ -1,6 +1,6 @@
 import './Hero.css';
 import avatarImg from '../assets/imagens/eu.png';
-import curriculoPdf from '../assets/Currículo.pdf';
+import curriculoPdf from '../assets/Curriculo.pdf';
 
 function Hero({ lang }) {
   const content = {
