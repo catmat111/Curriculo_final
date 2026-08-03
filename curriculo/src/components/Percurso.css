@@ -1,0 +1,82 @@
+.percurso-section {
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(57, 255, 20, 0.1);
+  margin-bottom: 3rem;
+
+  /* Mesma família de degradê do Hero/Contacto, com ênfase verde/rosa para combinar com a timeline */
+  background-color: var(--bg-section-alt);
+  background-image:
+    radial-gradient(ellipse 55% 50% at 90% 10%, rgba(57, 255, 20, 0.14), transparent 70%),
+    radial-gradient(ellipse 50% 45% at 5% 90%, rgba(255, 16, 122, 0.18), transparent 70%),
+    linear-gradient(170deg, #180b29 0%, #12081f 50%, #1a0a2e 100%);
+  background-size: 200% 200%, 200% 200%, 100% 100%;
+  animation: hero-gradient-drift 20s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .percurso-section {
+    animation: none;
+  }
+}
+
+.timeline {
+  margin-top: 3rem;
+  border-left: 2px solid rgba(255, 16, 122, 0.3); /* Linha rosa transparente */
+  padding-left: 2rem;
+  position: relative;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -2.45rem; /* Ajusta a bolinha para cima da linha */
+  top: 0;
+  width: 16px;
+  height: 16px;
+  background-color: var(--hot-pink);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--hot-pink);
+  animation: timeline-dot-pulse 2.5s infinite;
+}
+
+@keyframes timeline-dot-pulse {
+  0% { box-shadow: 0 0 10px var(--hot-pink); }
+  50% { box-shadow: 0 0 20px var(--hot-pink), 0 0 30px rgba(255, 16, 122, 0.5); }
+  100% { box-shadow: 0 0 10px var(--hot-pink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-dot {
+    animation: none;
+  }
+}
+
+.timeline-year {
+  font-family: var(--font-cyber);
+  color: var(--soft-purple);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.timeline-title {
+  color: var(--text-main);
+  margin: 0.5rem 0 0.2rem 0;
+  font-size: 1.3rem;
+}
+
+.timeline-place {
+  color: var(--neon-green);
+  font-family: var(--font-cyber);
+  font-size: 0.9rem;
+  margin: 0 0 1rem 0;
+}
+
+.timeline-desc {
+  color: rgba(224, 216, 234, 0.8);
+  line-height: 1.6;
+}

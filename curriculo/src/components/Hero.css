@@ -1,0 +1,450 @@
+.hero-section {
+  text-align: left;
+  padding: 5rem 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(157, 78, 221, 0.15);
+  margin-bottom: 3rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+  /* Degradê em camadas: brilhos neon difusos por cima de uma base roxa */
+  background-color: var(--bg-section-alt);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(157, 78, 221, 0.35), transparent 70%),
+    radial-gradient(ellipse 50% 45% at 85% 15%, rgba(255, 16, 122, 0.28), transparent 70%),
+    radial-gradient(ellipse 55% 50% at 75% 90%, rgba(57, 255, 20, 0.16), transparent 70%),
+    linear-gradient(160deg, #1c0b33 0%, #12081f 45%, #1a0a2e 100%);
+  background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+  animation: hero-gradient-drift 18s ease-in-out infinite alternate;
+  position: relative;
+  overflow: hidden;
+}
+
+/* O degradê respira devagar, sem distrair da leitura */
+@keyframes hero-gradient-drift {
+  0%   { background-position: 0% 0%, 100% 0%, 100% 100%, 0 0; }
+  100% { background-position: 30% 20%, 70% 25%, 60% 70%, 0 0; }
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap-reverse;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.hero-text h1 {
+  font-size: 2.2rem;
+  color: var(--neon-green);
+  margin-bottom: 1rem;
+}
+
+/* O cargo com a fonte Cyberpunk e cor rosa/verde */
+.cyber-text {
+  color: var(--neon-green);
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+}
+
+/* "Desenvolvedora Full-Stack" com efeito glitch cyberpunk */
+.craft-stitch {
+  font-family: var(--font-heading);
+  color: var(--hot-pink);
+  font-size: 1.5rem;
+  position: relative;
+  display: inline-block;
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 10px rgba(255, 16, 122, 0.6),
+    0 0 24px rgba(255, 16, 122, 0.35);
+  animation: neon-flicker 4s infinite steps(1);
+}
+
+/* As duas cópias fantasma que criam a aberração cromática (rosa + ciano) */
+.craft-stitch::before,
+.craft-stitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.craft-stitch::before {
+  color: #00fff9;
+  text-shadow: -2px 0 #00fff9;
+  animation: glitch-shift-left 3s infinite linear alternate-reverse;
+}
+
+.craft-stitch::after {
+  color: var(--neon-green);
+  text-shadow: 2px 0 var(--hot-pink);
+  animation: glitch-shift-right 2.4s infinite linear alternate-reverse;
+}
+
+/* Fatias horizontais que "saltam" em momentos aleatórios */
+@keyframes glitch-shift-left {
+  0%, 62%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  64%  { clip-path: inset(20% 0 60% 0); transform: translate(-4px, -1px); }
+  68%  { clip-path: inset(70% 0 12% 0); transform: translate(3px, 1px); }
+  72%  { clip-path: inset(45% 0 40% 0); transform: translate(-3px, 0); }
+  76%  { clip-path: inset(8% 0 82% 0); transform: translate(4px, 1px); }
+  80%  { clip-path: inset(100% 0 0 0); transform: translate(0); }
+}
+
+@keyframes glitch-shift-right {
+  0%, 55%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+  57%  { clip-path: inset(60% 0 25% 0); transform: translate(3px, 1px); }
+  61%  { clip-path: inset(15% 0 70% 0); transform: translate(-4px, -1px); }
+  66%  { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
+  70%  { clip-path: inset(100% 0 0 0); transform: translate(0); }
+}
+
+/* Falha de néon: o texto pisca como um letreiro a queimar */
+@keyframes neon-flicker {
+  0%, 88%, 92%, 100% { opacity: 1; }
+  89%  { opacity: 0.35; }
+  91%  { opacity: 0.65; }
+}
+
+/* Linhas de varrimento a percorrer o texto, como um CRT */
+.craft-stitch-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.craft-stitch-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -6px -10px;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 249, 0.09) 0px,
+    rgba(0, 255, 249, 0.09) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  pointer-events: none;
+  animation: scanline-move 6s linear infinite;
+}
+
+@keyframes scanline-move {
+  from { background-position-y: 0; }
+  to   { background-position-y: 100px; }
+}
+
+/* Respeita quem prefere menos movimento no ecrã */
+@media (prefers-reduced-motion: reduce) {
+  .craft-stitch,
+  .craft-stitch::before,
+  .craft-stitch::after,
+  .craft-stitch-wrapper::after,
+  .hero-section {
+    animation: none;
+  }
+  .craft-stitch::before,
+  .craft-stitch::after {
+    display: none;
+  }
+}
+
+/* CONTENTOR DA IMAGEM E DAS FORMAS GEOMÉTRICAS */
+.hero-image-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  min-width: 300px;
+}
+
+/* Formas geométricas de fundo (Bolas e Quadrados) */
+.cyber-shapes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Bola grande verde neon transparente */
+.shape-circle-green {
+  position: absolute;
+  top: -5%;
+  right: 0%;
+  width: 320px;
+  height: 320px;
+  background-color: rgba(57, 255, 20, 0.15);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(57, 255, 20, 0.25);
+}
+
+/* Quadrado roxo inclinado */
+.shape-square-purple {
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 130px;
+  height: 130px;
+  background-color: rgba(157, 78, 221, 0.25);
+  transform: rotate(15deg);
+  border-radius: 16px;
+}
+
+/* Bola menor verde sólida no canto inferior */
+.shape-circle-solid {
+  position: absolute;
+  bottom: -5%;
+  right: -2%;
+  width: 110px;
+  height: 110px;
+  background-color: #15803d;
+  border-radius: 50%;
+}
+
+/* Anel rosa tracejado com preenchimento suave */
+.shape-ring-pink {
+  position: absolute;
+  top: 42%;
+  left: 2%;
+  width: 160px;
+  height: 160px;
+  background-color: rgba(255, 16, 122, 0.08);
+  border: 2px dashed rgba(255, 16, 122, 0.35);
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(255, 16, 122, 0.15);
+  transform: rotate(-10deg);
+}
+
+/* Bolinha rosa suave, só para equilibrar a paleta junto ao avatar */
+.shape-circle-pink-soft {
+  position: absolute;
+  top: 18%;
+  left: 38%;
+  width: 70px;
+  height: 70px;
+  background-color: rgba(255, 16, 122, 0.16);
+  border-radius: 50%;
+}
+
+/* Losango roxo, colocado atrás dos quadrados de estatísticas (opacidade baixa de propósito,
+   os cards têm fundo opaco + blur para o texto continuar legível) */
+.shape-diamond-purple {
+  position: absolute;
+  bottom: 6%;
+  left: 32%;
+  width: 150px;
+  height: 150px;
+  background-color: rgba(157, 78, 221, 0.14);
+  border: 1px solid rgba(157, 78, 221, 0.4);
+  border-radius: 12px;
+  transform: rotate(45deg);
+}
+
+/* A imagem em pixel art fica acima das formas (z-index: 2) */
+.hero-avatar {
+  max-width: 100%;
+  width: 380px;
+  border-radius: 12px;
+  position: relative;
+  z-index: 2;
+ 
+}
+
+
+
+/* Terminal engraçado na secção Sobre */
+.about-terminal {
+  margin-top: 1.8rem;
+  max-width: 560px;
+  background-color: #16161c;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.about-terminal-header {
+  background-color: #23232b;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.about-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.about-dot-red { background-color: #ff5f56; }
+.about-dot-yellow { background-color: #ffbd2e; }
+.about-dot-green { background-color: #27c93f; }
+
+.about-terminal-title {
+  margin-left: 8px;
+  font-family: var(--font-cyber);
+  font-size: 0.75rem;
+  color: rgba(224, 216, 234, 0.5);
+}
+
+.about-terminal-body {
+  padding: 1.2rem 1.4rem;
+  font-family: var(--font-cyber);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.about-terminal-block {
+  margin-bottom: 0.9rem;
+}
+
+.about-terminal-block:last-child {
+  margin-bottom: 0;
+}
+
+.about-terminal-line {
+  margin: 0;
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+.about-terminal-prompt {
+  color: var(--neon-green);
+  margin-right: 6px;
+}
+
+.about-terminal-output {
+  margin: 2px 0 0 0;
+  color: rgba(224, 216, 234, 0.75);
+}
+
+.about-terminal-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--hot-pink);
+  animation: blink-cursor 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-terminal-cursor {
+    animation: none;
+  }
+}
+
+/* Painel de estatísticas divertidas, por baixo do avatar */
+.about-stats {
+  width: 100%;
+  max-width: 380px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(100px, 1fr));
+  gap: 0.9rem;
+  position: relative;
+  z-index: 2;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  text-align: center;
+  padding: 1rem 0.6rem;
+  background: rgba(18, 8, 31, 0.82);
+  backdrop-filter: blur(6px);
+  border: 1px dashed var(--soft-purple);
+  border-radius: 8px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--hot-pink);
+  box-shadow: 0 5px 15px rgba(255, 16, 122, 0.2);
+}
+
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  color: var(--neon-green);
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: var(--font-cyber);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(224, 216, 234, 0.7);
+}
+
+/* A estatística "café" é a piada da casa: destaque em rosa e um pulso próprio */
+.stat-card-fun {
+  border-color: var(--hot-pink);
+}
+
+.stat-card-fun .stat-value {
+  color: var(--hot-pink);
+  text-shadow: 0 0 10px rgba(255, 16, 122, 0.5);
+  animation: coffee-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes coffee-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card-fun .stat-value {
+    animation: none;
+  }
+}
+
+.btn-neon {
+  background: transparent;
+  color: var(--neon-green);
+  border: 2px solid var(--neon-green);
+  padding: 10px 20px;
+  font-family: var(--font-cyber);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--neon-green) inset, 0 0 8px var(--neon-green);
+  transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+  background: var(--neon-green);
+  color: var(--bg-color);
+}
+
+.social-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  color: var(--text-main);
+  text-decoration: underline dashed var(--soft-purple);
+  font-family: var(--font-cyber);
+  transition: color 0.3s ease;
+}
+
+.social-link:hover {
+  color: var(--hot-pink);
+}

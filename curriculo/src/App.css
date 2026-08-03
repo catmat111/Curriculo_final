@@ -1,184 +1,171 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+/* Container principal */
+.app-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem; /* Retiramos o padding do topo porque a navbar agora é fixa */
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
+/* SECÇÕES UNIFORMES: cada uma ocupa no mínimo um ecrã inteiro */
+main > section {
+  min-height: 100vh;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
+  justify-content: center;
+  scroll-margin-top: 120px; /* Compensa a navbar fixa ao saltar pelos links */
 
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
+  /* Estado inicial: a secção entra a deslizar de baixo e a ganhar opacidade */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* O App.jsx adiciona esta classe via IntersectionObserver quando a secção entra no ecrã */
+main > section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > section {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
+/* Cursor de terminal a piscar depois dos títulos em estilo comentário de código */
+.section-tag::after {
+  content: '_';
+  margin-left: 2px;
+  animation: blink-cursor 1s steps(1) infinite;
+}
 
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
+@keyframes blink-cursor {
+  50% { opacity: 0; }
+}
 
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
+@media (prefers-reduced-motion: reduce) {
+  .section-tag::after {
+    animation: none;
   }
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
-  position: relative;
+/* NAVBAR FIXA E MODERNA */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  background: rgba(18, 8, 31, 0.85); /* Roxo muito escuro com transparência */
+  backdrop-filter: blur(12px); /* Efeito de vidro esfumaçado */
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 5%;
+  box-sizing: border-box;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+/* A linha animada de scroll no fundo da navbar */
+.scroll-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-green);
+  transition: width 0.1s ease-out;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.navbar-logo {
+  color: var(--hot-pink);
+  font-weight: bold;
+  font-family: var(--font-cyber);
+  font-size: 1.2rem;
+  flex: 1; /* Empurra os links para o centro */
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  justify-content: center; /* Centraliza os links */
+}
+
+.navbar-links a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-family: var(--font-cyber);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--neon-green);
+}
+
+/* ÁREA DOS BOTÕES (DIREITA) */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  justify-content: flex-end; /* Empurra os botões para a direita */
+}
+
+/* Botão Redondo (Idioma e Tema) */
+.btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: var(--text-main);
+  font-family: var(--font-cyber);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.btn-circle:hover {
+  border-color: var(--text-main);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Botão em formato de pílula (Open to Work) */
+.btn-pill {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-cyber);
+  font-size: 0.8rem;
+  color: var(--text-main);
+  cursor: default;
+}
+
+/* A bolinha verde a piscar */
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--neon-green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(57, 255, 20, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
 }

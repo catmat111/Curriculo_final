@@ -1,122 +1,119 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useEffect } from 'react';
+import './App.css';
+import AnimacaoInicial from './components/AnimacaoInicial';
+import Hero from './components/Hero';
+import Projetos from './components/Projetos';
+import Percurso from './components/Percurso';
+import Stack from './components/Stack';
+import Contacto from './components/Contacto';
+import ParticulasFundo from './components/ParticulasFundo'; // AS BOLAS NO FUNDO
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [loading, setLoading] = useState(true);
+  const [isExiting, setIsExiting] = useState(false);
+  const [lang, setLang] = useState('pt');
+  const [scrollProgress, setScrollProgress] = useState(0);
 
+  useEffect(() => {
+    // Controla o tempo da animação inicial de terminal
+    const timerExit = setTimeout(() => setIsExiting(true), 6500);
+    const timerRemove = setTimeout(() => setLoading(false), 7000);
+
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = `${totalScroll / windowHeight}`;
+      setScrollProgress(scroll * 100);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      clearTimeout(timerExit);
+      clearTimeout(timerRemove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    // As secções só existem no DOM depois da animação inicial terminar
+    if (loading) return;
+
+    const sections = document.querySelectorAll('main > section');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [loading]);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  const toggleLang = () => {
+    setLang(lang === 'pt' ? 'en' : 'pt');
+  };
+
+  // Se ainda estiver a carregar, mostra a animação inicial do terminal (com as bolas no fundo também!)
+  if (loading) {
+    return (
+      <div style={{ position: 'relative', width: '100vw', height: '100vh', backgroundColor: 'var(--bg-color)' }}>
+        <ParticulasFundo />
+        <AnimacaoInicial isExiting={isExiting} lang={lang} />
+      </div>
+    );
+  }
+
+  // Site principal após a animação
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app-container" style={{ position: 'relative' }}>
+      
+      {/* As bolinhas verdes a passar no fundo do site */}
+      <ParticulasFundo />
 
-      <div className="ticks"></div>
+      <nav className="navbar">
+        <div className="navbar-logo">CATARINA_MATOS.exe</div>
+        
+        <ul className="navbar-links">
+          <li><a href="#sobre">{lang === 'pt' ? 'Sobre' : 'About'}</a></li>
+          <li><a href="#projetos">{lang === 'pt' ? 'Projetos' : 'Projects'}</a></li>
+          <li><a href="#percurso">{lang === 'pt' ? 'Percurso' : 'Journey'}</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#contacto">{lang === 'pt' ? 'Contacto' : 'Contact'}</a></li>
+        </ul>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <div className="navbar-actions">
+          <button onClick={toggleLang} className="btn-circle" title={lang === 'pt' ? 'Mudar idioma' : 'Change language'}>
+            {lang === 'pt' ? 'EN' : 'PT'}
+          </button>
+          <div className="btn-pill">
+            <span className="status-dot"></span> OPEN TO WORK
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <div className="scroll-progress" style={{ width: `${scrollProgress}%` }}></div>
+      </nav>
+
+      <main style={{ position: 'relative', zIndex: 1 }}>
+        <Hero lang={lang} />
+        <Projetos lang={lang} />
+        <Percurso lang={lang} />
+        <Stack lang={lang} />
+        <Contacto lang={lang} />
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;

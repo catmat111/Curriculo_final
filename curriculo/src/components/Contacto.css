@@ -1,0 +1,116 @@
+.contato-section {
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  margin-bottom: 3rem;
+
+  /* Ecoa o degradê do Hero, mais lento e discreto, para fechar a página com a mesma vibe */
+  background-color: var(--bg-section-alt);
+  background-image:
+    radial-gradient(ellipse 55% 50% at 85% 85%, rgba(157, 78, 221, 0.3), transparent 70%),
+    radial-gradient(ellipse 50% 45% at 10% 20%, rgba(255, 16, 122, 0.2), transparent 70%),
+    linear-gradient(200deg, #1a0a2e 0%, #180b29 50%, #1c0b33 100%);
+  background-size: 200% 200%, 200% 200%, 100% 100%;
+  animation: hero-gradient-drift 24s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contato-section {
+    animation: none;
+  }
+}
+
+.contacto-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4rem;
+  justify-content: space-between;
+}
+
+.contacto-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.contacto-tag {
+  color: var(--hot-pink);
+  font-family: var(--font-craft);
+  margin-bottom: 0.5rem;
+}
+
+.contacto-title {
+  font-size: 2.5rem;
+  color: var(--neon-green);
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+}
+
+.contacto-desc {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.contacto-links {
+  list-style: none;
+  padding: 0;
+  font-family: var(--font-cyber);
+}
+
+.contacto-links li {
+  margin-bottom: 1rem;
+}
+
+.contacto-links a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contacto-links a:hover {
+  color: var(--neon-green);
+}
+
+.contacto-form {
+  flex: 1;
+  min-width: 300px;
+  background: rgba(0,0,0,0.2);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-family: var(--font-cyber);
+  font-size: 0.8rem;
+  color: var(--soft-purple);
+  margin-bottom: 0.5rem;
+}
+
+.input-group input,
+.input-group textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--soft-purple);
+  color: var(--neon-green);
+  font-family: var(--font-cyber);
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  border-bottom-color: var(--hot-pink);
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: rgba(224, 216, 234, 0.3);
+}

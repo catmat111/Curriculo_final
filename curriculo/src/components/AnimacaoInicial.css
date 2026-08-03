@@ -1,0 +1,120 @@
+/* Atualize o .loader existente para ter transição */
+.loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color);
+  padding: 20px;
+  /* Nova linha: diz ao fundo para desaparecer suavemente */
+  transition: opacity 0.5s ease-in-out; 
+}
+
+/* Atualize a .mac-window existente para ter transição */
+.mac-window {
+  background-color: #16161c;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  /* Nova linha: diz à janela para se mover suavemente */
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+
+/* 
+   ADICIONE ISTO NO FINAL DO ARQUIVO:
+   Estas regras são ativadas nos últimos 0.5s antes de o site abrir
+*/
+.fade-out {
+  opacity: 0;
+}
+
+.fade-out .mac-window {
+  transform: translateY(-30px) scale(0.95); /* Desliza para cima e encolhe */
+  opacity: 0;
+}
+
+/* A barra superior da janela */
+.mac-header {
+  background-color: #23232b;
+  padding: 12px 16px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* As 3 bolinhas */
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.red { background-color: #ff5f56; }
+.yellow { background-color: #ffbd2e; }
+.green { background-color: #27c93f; }
+
+/* O interior onde fica o texto */
+.mac-body {
+  padding: 30px;
+}
+
+.terminal-container {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-cyber);
+  color: var(--neon-green);
+  font-size: 1.2rem;
+}
+
+/* A animação de escrever (usando clip-path para não falhar) */
+.terminal-line {
+  margin: 6px 0;
+  white-space: nowrap;
+  width: fit-content;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0); 
+}
+
+/* Tempos de cada linha */
+.line1 { animation: typeLine 0.8s steps(30, end) 0.5s forwards; }
+.line2 { animation: typeLine 1.5s steps(70, end) 1.5s forwards; }
+.line3 { animation: typeLine 1.2s steps(55, end) 3.2s forwards; }
+.line4 { animation: typeLine 0.8s steps(25, end) 4.6s forwards; }
+.line5 { animation: typeLine 0.5s steps(25, end) 5.6s forwards; }
+
+@keyframes typeLine {
+  0% {
+    opacity: 1;
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.prompt {
+  color: var(--hot-pink);
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+.craft-highlight {
+  color: var(--hot-pink);
+}
+
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--hot-pink);
+  animation: blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

@@ -1,0 +1,47 @@
+.background-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  background-color: var(--neon-green);
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: floatUp linear infinite;
+}
+
+/* 10 variações de tamanhos, posições (left) e velocidades diferentes */
+.particle.p-0 { width: 4px; height: 4px; left: 5%; animation-duration: 12s; animation-delay: 0s; }
+.particle.p-1 { width: 7px; height: 7px; left: 15%; animation-duration: 16s; animation-delay: 2s; box-shadow: 0 0 6px var(--neon-green); }
+.particle.p-2 { width: 3px; height: 3px; left: 28%; animation-duration: 14s; animation-delay: 4s; }
+.particle.p-3 { width: 6px; height: 6px; left: 40%; animation-duration: 19s; animation-delay: 1s; }
+.particle.p-4 { width: 5px; height: 5px; left: 55%; animation-duration: 13s; animation-delay: 3s; box-shadow: 0 0 4px var(--neon-green); }
+.particle.p-5 { width: 8px; height: 8px; left: 65%; animation-duration: 22s; animation-delay: 5s; }
+.particle.p-6 { width: 3px; height: 3px; left: 72%; animation-duration: 11s; animation-delay: 1.5s; }
+.particle.p-7 { width: 6px; height: 6px; left: 82%; animation-duration: 17s; animation-delay: 2.5s; box-shadow: 0 0 5px var(--neon-green); }
+.particle.p-8 { width: 4px; height: 4px; left: 91%; animation-duration: 15s; animation-delay: 3.5s; }
+.particle.p-9 { width: 5px; height: 5px; left: 97%; animation-duration: 20s; animation-delay: 0.5s; }
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(105vh) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  80% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-5vh) scale(1.2);
+    opacity: 0;
+  }
+}

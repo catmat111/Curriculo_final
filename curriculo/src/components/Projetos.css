@@ -1,0 +1,82 @@
+.projetos-section {
+  background-color: rgba(18, 8, 31, 0.6);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  border: 1px dashed var(--soft-purple);
+  margin-bottom: 3rem;
+}
+
+.projetos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.projeto-card {
+  background-color: rgba(22, 22, 28, 0.7); /* Fundo um pouco mais escuro que a página */
+  border: 1px solid var(--soft-purple);
+  padding: 1.5rem;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.projeto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(255, 16, 122, 0.2); /* Brilho rosa */
+  border-color: var(--hot-pink);
+}
+
+/* Barrinha de topo estilo janela de terminal, à la editor de código */
+.card-dots {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.dot-red { background-color: #ff5f56; }
+.dot-yellow { background-color: #ffbd2e; }
+.dot-green { background-color: #27c93f; }
+
+.projeto-card h3 {
+  color: var(--neon-green);
+  margin-top: 0;
+  font-family: var(--font-cyber);
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tech-tag {
+  background-color: transparent;
+  border: 1px dashed var(--hot-pink);
+  color: var(--text-main);
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+/* Pequeno "salto" de glitch ao passar o rato, sem ficar em loop */
+.tech-tag:hover {
+  color: var(--neon-green);
+  text-shadow: -1px 0 var(--hot-pink), 1px 0 #00fff9;
+  animation: tag-glitch-jump 0.25s steps(2);
+}
+
+@keyframes tag-glitch-jump {
+  0% { transform: translate(0); }
+  50% { transform: translate(-1px, 1px); }
+  100% { transform: translate(0); }
+}
