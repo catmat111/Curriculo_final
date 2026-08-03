@@ -80,3 +80,33 @@
   50% { transform: translate(-1px, 1px); }
   100% { transform: translate(0); }
 }
+
+/* Link para o repositório no GitHub, quando existe */
+.project-link {
+  display: inline-block;
+  margin-top: 1.2rem;
+  font-family: var(--font-cyber);
+  font-size: 0.85rem;
+  color: var(--neon-green);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--neon-green);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.project-link:hover {
+  color: var(--hot-pink);
+  border-bottom-color: var(--hot-pink);
+}
+
+/* Aviso discreto para projetos sem código público (académicos/privados) */
+.project-link-disabled {
+  color: rgba(224, 216, 234, 0.4);
+  border-bottom: 1px dashed rgba(224, 216, 234, 0.25);
+  cursor: default;
+  font-style: italic;
+}
+
+.project-link-disabled:hover {
+  color: rgba(224, 216, 234, 0.4);
+  border-bottom-color: rgba(224, 216, 234, 0.25);
+}

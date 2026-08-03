@@ -1,5 +1,6 @@
 import './Hero.css';
 import avatarImg from '../assets/imagens/eu.png';
+import curriculoPdf from '../assets/Currículo.pdf';
 
 function Hero({ lang }) {
   const content = {
@@ -133,7 +134,9 @@ function Hero({ lang }) {
           </div>
 
           <div className="social-links">
-            <button className="btn-neon">{content[lang].button}</button>
+            <a href={curriculoPdf} target="_blank" rel="noreferrer" className="btn-neon">
+              {content[lang].button}
+            </a>
             <a href="https://github.com/catmat111" target="_blank" rel="noreferrer" className="social-link">GitHub</a>
             <a href="https://linkedin.com/in/catarina-pereira-0858b713a/" target="_blank" rel="noreferrer" className="social-link">LinkedIn</a>
             <a href="mailto:catarina12112.cm@gmail.com" className="social-link">Email</a>

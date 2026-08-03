@@ -26,10 +26,10 @@ function Percurso({ lang }) {
     {
       year: lang === 'pt' ? 'Presente' : 'Present',
       title: lang === 'pt' ? 'Base de Operações' : 'Home Base',
-      place: 'Caldas da Rainha, Portugal',
-      desc: lang === 'pt' 
-        ? 'A minha casa e centro de desenvolvimento remoto, à procura de oportunidades 100% remotas para aplicar os meus conhecimentos Full-Stack.' 
-        : 'My home and remote development hub, seeking 100% remote opportunities to apply my Full-Stack expertise.',
+      place: 'Tomar, Portugal',
+      desc: lang === 'pt'
+        ? 'A minha casa e centro de desenvolvimento remoto. Cresci nas Caldas da Rainha, onde ainda vive a minha família, mas é em Tomar que vivo e trabalho agora — sempre aberta a oportunidades 100% remotas para aplicar os meus conhecimentos Full-Stack.'
+        : 'My home and remote development hub. I grew up in Caldas da Rainha, where my family still lives, but Tomar is where I live and work now — always open to 100% remote opportunities to apply my Full-Stack expertise.',
       type: 'location'
     }
   ];

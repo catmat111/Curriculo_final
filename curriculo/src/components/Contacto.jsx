@@ -1,4 +1,9 @@
+import { useState } from 'react';
 import './Contacto.css';
+
+// Chave de acesso do Web3Forms (web3forms.com) — associada ao email da Catarina.
+// Para trocar de conta/email, basta gerar uma nova chave no site e substituir aqui.
+const WEB3FORMS_ACCESS_KEY = 'dc499292-db0e-4963-b1de-f166b3ea6eac';
 
 function Contacto({ lang }) {
   const content = {
@@ -10,7 +15,10 @@ function Contacto({ lang }) {
       email: "seu@email.com",
       subject: "Assunto",
       message: "Sua mensagem...",
-      btn: "ENVIAR MENSAGEM"
+      btn: "ENVIAR MENSAGEM",
+      sending: "A ENVIAR...",
+      success: "Mensagem enviada! Respondo em breve.",
+      error: "Não foi possível enviar. Tenta outra vez ou usa o email diretamente."
     },
     en: {
       tag: "/* Contact */",
@@ -20,7 +28,47 @@ function Contacto({ lang }) {
       email: "your@email.com",
       subject: "Subject",
       message: "Your message...",
-      btn: "SEND MESSAGE"
+      btn: "SEND MESSAGE",
+      sending: "SENDING...",
+      success: "Message sent! I'll get back to you soon.",
+      error: "Couldn't send it. Please try again or email me directly."
+    }
+  };
+
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
     }
   };
 
@@ -49,27 +97,63 @@ function Contacto({ lang }) {
         </div>
 
         {/* Formulário da direita */}
-        <div className="contacto-form">
+        <form className="contacto-form" onSubmit={handleSubmit}>
           <div className="input-group">
             <label>nome / name</label>
-            <input type="text" placeholder={content[lang].name} />
+            <input
+              type="text"
+              name="name"
+              placeholder={content[lang].name}
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="input-group">
             <label>email</label>
-            <input type="email" placeholder={content[lang].email} />
+            <input
+              type="email"
+              name="email"
+              placeholder={content[lang].email}
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="input-group">
             <label>assunto / subject</label>
-            <input type="text" placeholder={content[lang].subject} />
+            <input
+              type="text"
+              name="subject"
+              placeholder={content[lang].subject}
+              value={formData.subject}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="input-group">
             <label>mensagem / message</label>
-            <textarea placeholder={content[lang].message} rows="4"></textarea>
+            <textarea
+              name="message"
+              placeholder={content[lang].message}
+              rows="4"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            ></textarea>
           </div>
-          <button className="btn-neon" style={{ width: '100%', marginTop: '1rem' }}>
-            {content[lang].btn}
+          <button
+            type="submit"
+            className="btn-neon"
+            style={{ width: '100%', marginTop: '1rem' }}
+            disabled={status === 'sending'}
+          >
+            {status === 'sending' ? content[lang].sending : content[lang].btn}
           </button>
-        </div>
+
+          {status === 'success' && <p className="form-status form-status-success">{content[lang].success}</p>}
+          {status === 'error' && <p className="form-status form-status-error">{content[lang].error}</p>}
+        </form>
 
       </div>
     </section>

@@ -114,3 +114,24 @@
 .input-group textarea::placeholder {
   color: rgba(224, 216, 234, 0.3);
 }
+
+.contacto-form .btn-neon:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  box-shadow: none;
+}
+
+.form-status {
+  margin: 1rem 0 0 0;
+  font-family: var(--font-cyber);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.form-status-success {
+  color: var(--neon-green);
+}
+
+.form-status-error {
+  color: var(--hot-pink);
+}
